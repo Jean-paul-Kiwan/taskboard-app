@@ -1,0 +1,35 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Add SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/key.pem
+          chmod 600 ~/.ssh/key.pem
+
+      - name: Test SSH Connection
+        run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/key.pem ec2-user@${{ secrets.EC2_HOST }} "echo Connected to EC2 🎉"
+
+      - name: Copy project to EC2
+        run: |
+          rsync -avz -e "ssh -o StrictHostKeyChecking=no -i ~/.ssh/key.pem" --exclude node_modules ./ ec2-user@${{ secrets.EC2_HOST }}:/home/ec2-user/taskboard-app
+
+      - name: Install & Restart App
+        run: |
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/key.pem ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
+            cd taskboard-app
+            npm install --omit=dev
+            pm2 restart taskboard || pm2 start server.js --name taskboard
+            pm2 save
+          EOF
