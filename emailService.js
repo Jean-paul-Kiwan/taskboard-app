@@ -1,30 +1,30 @@
-// emailService.js
-const axios = require("axios");
+// emailService.js — IAM-secure (NO Lambda URL)
+
+const { LambdaClient, InvokeCommand } = require("@aws-sdk/client-lambda");
+
+const client = new LambdaClient({
+  region: "eu-west-1", // Ireland
+});
 
 async function sendEmail({ to, subject, message }) {
-  const url = process.env.EMAIL_LAMBDA_URL;
-  if (!url) {
-    console.error("❌ EMAIL_LAMBDA_URL missing in .env");
-    return;
-  }
-
   const payload = { to, subject, message };
-  console.log("📦 Sending payload:", payload);
 
   try {
-    const res = await axios({
-      method: "post",
-      url,
-      headers: { "Content-Type": "application/json" },
-      data: payload,
+    const command = new InvokeCommand({
+      FunctionName: "taskboard-email", 
+      Payload: Buffer.from(JSON.stringify(payload)),
     });
 
-    console.log("📨 Lambda email response:", res.data);
-    return res.data;
+    const response = await client.send(command);
+
+    const result = JSON.parse(
+      Buffer.from(response.Payload).toString()
+    );
+
+    console.log("📨 Lambda email response:", result);
+    return result;
   } catch (err) {
-    console.error("❌ Email Lambda Error:", err?.response?.data || err.message);
-    console.error("⚠ Status:", err?.response?.status);
-    console.error("⚠ Headers:", err?.response?.headers);
+    console.error("❌ Email Lambda Error:", err);
     return null;
   }
 }

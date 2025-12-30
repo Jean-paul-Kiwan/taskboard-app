@@ -20,7 +20,6 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const { sendEmail } = require("./emailService");
-console.log("Lambda URL:", process.env.EMAIL_LAMBDA_URL);
 
 /* =======================================
    MONGO DB SETUP
@@ -1110,7 +1109,6 @@ app.post(
   })
 );
 
-// Delete task
 app.post(
   "/tasks/:id/delete",
   authRequired,
@@ -1129,32 +1127,17 @@ app.post(
   })
 );
 
-/* =======================================
-   HEALTH CHECK FOR AWS
-======================================= */
 
 app.get("/health", (_, res) => {
   res.status(200).json({ status: "ok" });
 });
 
-/* =======================================
-   ERROR HANDLER
-======================================= */
 
 app.use((err, req, res, next) => {
   console.error("Unhandled error:", err);
   res.status(500).send("Something went wrong.");
 });
 
-/* =======================================
-   START
-======================================= */
 
-// Optional manual test email on startup (can remove later)
-sendEmail({
-  to: "jeanpaulkiwan03@gmail.com",
-  subject: "Manual Node Email Test",
-  message: "If you see this, Node → Lambda → SES works!",
-});
 
 startServer();

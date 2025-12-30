@@ -11,7 +11,9 @@
     "npm": ">=9"
   },
   "dependencies": {
+    "@aws-sdk/client-lambda": "^3.957.0",
     "axios": "^1.13.2",
+    "bcryptjs": "^3.0.3",
     "better-sqlite3": "^11.0.0",
     "body-parser": "^1.20.3",
     "connect-mongodb-session": "^5.0.0",
