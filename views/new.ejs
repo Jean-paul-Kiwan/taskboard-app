@@ -1,0 +1,77 @@
+<div class="tasks-page-header">
+  <h1 class="tasks-title">Create Task</h1>
+  <p class="tasks-subtitle">
+    Add a new task to workspace "<%= workspace.name %>".
+  </p>
+</div>
+
+<div class="form-card mt-4">
+  <form method="POST" action="/tasks">
+    <div class="mb-3">
+      <label class="form-label">Title</label>
+      <input
+        type="text"
+        name="title"
+        class="form-control"
+        placeholder="Design dashboard, fix login bug..."
+        required
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Description</label>
+      <textarea
+        name="description"
+        class="form-control"
+        rows="3"
+        placeholder="Optional details, acceptance criteria, etc."
+      ></textarea>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <label class="form-label">Tag</label>
+        <input
+          type="text"
+          name="tag"
+          class="form-control"
+          placeholder="Frontend, Backend, Urgent..."
+        />
+      </div>
+
+      <div class="col-md-4 mb-3">
+        <label class="form-label">Priority</label>
+        <select name="priority" class="form-select">
+          <option value="low">Low</option>
+          <option value="medium" selected>Medium</option>
+          <option value="high">High</option>
+          <option value="urgent">Urgent</option>
+        </select>
+      </div>
+
+      <div class="col-md-4 mb-3">
+        <label class="form-label">Due Date</label>
+        <input type="date" name="due_date" class="form-control" />
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label class="form-label">Assign To</label>
+      <select name="assigned_to" class="form-select">
+        <option value="">Unassigned</option>
+        <% members.forEach(m => { %>
+          <option value="<%= m.id %>">
+            <%= m.name %> <%= m.role === 'owner' ? '(Owner)' : '' %>
+          </option>
+        <% }) %>
+      </select>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center">
+      <a href="/tasks" class="btn btn-outline-light">Back to Tasks</a>
+      <button type="submit" class="btn btn-primary rounded-pill">
+        Create Task
+      </button>
+    </div>
+  </form>
+</div>

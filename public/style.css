@@ -1,0 +1,486 @@
+/* ===========================
+   GLOBAL – OCEAN DARK GLASS
+=========================== */
+* { box-sizing: border-box; }
+
+body {
+  background: radial-gradient(circle at 50% 20%, #0b3d91, #012a4a 40%, #001219 85%);
+  font-family: "Inter", sans-serif;
+  color: #e2e8f0;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: #76c7ff;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+.container {
+  max-width: 1250px;
+  margin: auto;
+}
+
+/* Override Bootstrap muted text for dark bg */
+.text-muted,
+.text-accent {
+  color: #b6d1e5 !important;
+}
+
+/* Alerts glass */
+.glass-alert {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(148, 163, 184, 0.8);
+  color: #e2e8f0;
+}
+
+/* ===========================
+   NAVBAR
+=========================== */
+.navbar {
+  background: rgba(15, 23, 42, 0.9) !important;
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.6);
+}
+.navbar-brand {
+  font-weight: 700 !important;
+  letter-spacing: -0.3px;
+  color: #d7efff !important;
+}
+.navbar .nav-link {
+  color: #9cd4ff !important;
+}
+.navbar .nav-link:hover {
+  color: #ffffff !important;
+}
+
+/* ===========================
+   PAGE TITLES
+=========================== */
+.tasks-page-header {
+  text-align: center;
+  margin: 25px 0 10px;
+}
+.tasks-title {
+  font-size: 42px;
+  font-weight: 800;
+  color: #63e6ff;
+  letter-spacing: 1px;
+}
+.tasks-subtitle {
+  color: #b8e7ff;
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+/* ===========================
+   BUTTONS
+=========================== */
+.btn-primary {
+  background: linear-gradient(135deg, #00b4d8, #0077b6);
+  border: none;
+  color: white !important;
+  border-radius: 50px;
+  padding-inline: 20px;
+  box-shadow: 0 0 18px rgba(0, 180, 216, 0.55);
+}
+.btn-primary:hover {
+  background: linear-gradient(135deg, #0096c7, #006699);
+  box-shadow: 0 0 26px rgba(0, 180, 216, 0.75);
+}
+
+.btn-outline-info {
+  border-color: #0ea5e9;
+  color: #0ea5e9;
+}
+.btn-outline-info:hover {
+  background-color: #0ea5e9;
+  color: #0b1120;
+}
+
+.btn-outline-light {
+  border-color: rgba(226, 232, 240, 0.9);
+  color: #e2e8f0;
+}
+.btn-outline-light:hover {
+  background-color: rgba(226, 232, 240, 0.9);
+  color: #020617;
+}
+
+.btn-link.text-danger {
+  color: #f97373 !important;
+}
+
+/* ===========================
+   BOARD LAYOUT
+=========================== */
+.board-wrapper {
+  width: 98%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 26px;
+  width: 100%;
+}
+
+/* ===========================
+   COLUMNS – GLASS PANELS
+=========================== */
+.board-column {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(148, 163, 184, 0.55);
+  backdrop-filter: blur(22px);
+  border-radius: 14px;
+  padding: 18px;
+  min-height: 550px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+  display: flex;
+  flex-direction: column;
+}
+
+.board-column-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.board-column-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #e0f6ff;
+}
+
+.board-column-subtitle {
+  font-size: 13px;
+  color: #b6d1e5;
+}
+
+.board-column-body {
+  margin-top: 10px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.count-pill {
+  background: rgba(15, 118, 177, 0.9) !important;
+  color: #e5f6ff !important;
+}
+
+/* ===========================
+   TASK CARDS – GLASS
+=========================== */
+.task-card {
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(20px);
+  padding: 14px;
+  margin-bottom: 18px;
+  border-radius: 12px;
+  transition: 0.25s ease;
+}
+
+.task-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(56, 189, 248, 0.8);
+  box-shadow: 0 8px 34px rgba(56, 189, 248, 0.45);
+}
+
+.task-card-done {
+  opacity: 0.75;
+}
+
+.task-title {
+  font-weight: 700;
+  font-size: 18px;
+  color: #f9fafb;
+}
+.task-desc {
+  color: #d1d5db;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.task-meta {
+  margin-top: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.task-tag {
+  background: rgba(59, 130, 246, 0.25);
+  border-radius: 18px;
+  padding: 3px 8px;
+  color: #bfdbfe;
+  font-size: 11px;
+}
+.task-due {
+  background: rgba(248, 113, 113, 0.18);
+  padding: 3px 8px;
+  border-radius: 18px;
+  color: #fecaca;
+  font-size: 11px;
+}
+.task-assignee {
+  font-size: 11px;
+  color: #e5e7eb;
+}
+
+/* ===========================
+   SELECTS & TASK ACTIONS
+=========================== */
+.task-actions {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.status-select,
+.priority-select,
+.assign-select {
+  background: rgba(15, 23, 42, 0.9);
+  border-radius: 8px;
+  border: 1px solid rgba(148, 163, 184, 0.8);
+  padding: 4px 8px;
+  font-size: 12px;
+  color: #e2e8f0;
+}
+
+.status-select option,
+.priority-select option,
+.assign-select option {
+  background: #020617;
+  color: #e2e8f0;
+}
+
+.task-delete-form {
+  margin-top: 4px;
+}
+
+.empty-text {
+  margin-top: 40px;
+  color: #8fb9d6;
+  font-size: 14px;
+}
+
+/* ===========================
+   AUTH PAGES – LOGIN / SIGNUP
+=========================== */
+.login-container {
+  width: 950px;
+  min-height: 540px;
+  margin: 60px auto 80px;
+  display: flex;
+  background: rgba(15, 23, 42, 0.9);
+  border-radius: 24px;
+  overflow: hidden;
+  backdrop-filter: blur(26px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.65);
+}
+
+/* LEFT SIDE */
+.login-left {
+  flex: 1;
+  padding: 50px 50px;
+}
+
+.login-heading {
+  font-size: 34px;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+.login-small {
+  color: #cbd5f5;
+  font-size: 15px;
+  margin-bottom: 20px;
+}
+
+.login-form .input-group {
+  margin: 18px 0;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(148, 163, 184, 0.7);
+  font-size: 15px;
+  background: rgba(15, 23, 42, 0.9);
+  backdrop-filter: blur(8px);
+  color: #f9fafb;
+}
+.login-form input:focus {
+  border-color: #0ea5e9;
+  outline: none;
+  box-shadow: 0 0 9px rgba(56, 189, 248, 0.7);
+}
+
+/* LOGIN BUTTON */
+.btn-login-main {
+  width: 100%;
+  background: linear-gradient(130deg, #00cfcf, #0ea5e9);
+  border: none;
+  color: #fff;
+  padding: 14px 20px;
+  border-radius: 999px;
+  margin-top: 20px;
+  font-size: 17px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.btn-login-main:hover {
+  opacity: 0.9;
+}
+
+/* RIGHT SIDE */
+.login-right {
+  flex: 1;
+  background: linear-gradient(145deg, #00b4d8, #0077b6);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 45px;
+}
+
+.right-title {
+  font-size: 32px;
+  font-weight: 700;
+}
+.right-text {
+  font-size: 16px;
+  margin: 15px 0 30px;
+  text-align: center;
+}
+
+.btn-signup-main {
+  background: #fff;
+  color: #0077b6;
+  padding: 12px 30px;
+  border-radius: 999px;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: 0.2s;
+}
+.btn-signup-main:hover {
+  opacity: 0.88;
+}
+
+/* ===========================
+   GENERIC FORM CARD (NEW TASK, CREATE WORKSPACE, INVITE)
+=========================== */
+.form-card {
+  background: rgba(15, 23, 42, 0.9);
+  backdrop-filter: blur(18px);
+  border-radius: 16px;
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  padding: 24px 26px;
+  color: #e2e8f0;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.55);
+}
+
+.form-card .form-control,
+.form-card textarea,
+.form-card input[type="date"],
+.form-card .form-select {
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.85);
+  color: #e2e8f0;
+}
+
+.form-card .form-control:focus,
+.form-card textarea:focus,
+.form-card input[type="date"]:focus,
+.form-card .form-select:focus {
+  border-color: #0ea5e9;
+  outline: none;
+  box-shadow: 0 0 9px rgba(56, 189, 248, 0.7);
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #e0f2fe;
+}
+
+/* ===========================
+   WORKSPACE CARDS
+=========================== */
+.workspace-card {
+  background: rgba(15, 23, 42, 0.9);
+  border-radius: 14px;
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  padding: 16px 18px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+}
+
+.workspace-name {
+  margin: 0;
+  font-size: 18px;
+  color: #e5f3ff;
+}
+
+.workspace-role-badge {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(59, 130, 246, 0.3);
+  color: #bfdbfe;
+}
+
+/* ===========================
+   NOTIFICATIONS
+=========================== */
+.notification-card {
+  background: rgba(15, 23, 42, 0.9);
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  padding: 12px 14px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
+}
+.notification-unread {
+  border-color: rgba(56, 189, 248, 0.9);
+}
+.notification-time {
+  color: #9ca3af !important;
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+@media (max-width: 992px) {
+  .board {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .login-container {
+    flex-direction: column;
+    width: 92%;
+    min-height: auto;
+  }
+  .login-right {
+    order: -1;
+    padding: 30px 20px;
+  }
+}
+
+@media (max-width: 700px) {
+  .board {
+    grid-template-columns: 1fr;
+  }
+}

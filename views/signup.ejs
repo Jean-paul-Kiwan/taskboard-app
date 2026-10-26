@@ -1,0 +1,66 @@
+<div class="auth-container">
+  <div class="login-container">
+    <div class="login-left">
+      <h1 class="login-heading">Create your account</h1>
+      <p class="login-small">Sign up to start organizing your tasks.</p>
+
+      <form method="POST" action="/signup" class="login-form">
+        <div class="input-group">
+          <label class="form-label">Name</label>
+          <input
+            type="text"
+            name="name"
+            required
+            placeholder="Jean-Paul"
+          />
+        </div>
+
+        <div class="input-group">
+          <label class="form-label">Email</label>
+          <input
+            type="email"
+            name="email"
+            required
+            placeholder="demo1@example.invalid"
+          />
+        </div>
+
+        <div class="input-group">
+          <label class="form-label">Password</label>
+          <input
+            type="password"
+            name="password"
+            required
+            placeholder="Minimum 6 characters"
+          />
+        </div>
+
+        <div class="input-group">
+          <label class="form-label">Confirm Password</label>
+          <input
+            type="password"
+            name="confirmPassword"
+            required
+            placeholder="Repeat your password"
+          />
+        </div>
+
+        <button type="submit" class="btn-login-main">Sign up</button>
+      </form>
+
+      <p class="mt-3 text-accent">
+        Already have an account?
+        <a href="/login">Login</a>
+      </p>
+    </div>
+
+    <div class="login-right">
+      <h2 class="right-title">Stay on top of everything</h2>
+      <p class="right-text">
+        Group your tasks by status, assign them to teammates,
+        and keep all your workspaces organized in one place.
+      </p>
+      <a href="/login" class="btn-signup-main">I already have an account</a>
+    </div>
+  </div>
+</div>

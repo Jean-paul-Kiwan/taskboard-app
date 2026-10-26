@@ -1,0 +1,375 @@
+<div class="tasks-page-header">
+  <h1 class="tasks-title">
+    <%= workspace ? workspace.name : "Your Workspace" %>
+  </h1>
+  <p class="tasks-subtitle">
+    Organize tasks for this workspace across To Do, In Progress, Paused, and Done.
+  </p>
+</div>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <div>
+    <p class="text-muted small mb-1">
+      Total: <strong><%= stats.total %></strong> ·
+      To Do: <strong><%= stats.todo %></strong> ·
+      In Progress: <strong><%= stats.in_progress %></strong> ·
+      Paused: <strong><%= stats.paused %></strong> ·
+      Done: <strong><%= stats.done %></strong>
+    </p>
+  </div>
+  <a href="/tasks/new" class="btn btn-primary rounded-pill">
+    + New Task
+  </a>
+</div>
+
+<div class="board-wrapper">
+  <div class="board">
+    <!-- To Do -->
+    <section class="board-column">
+      <header class="board-column-header">
+        <div>
+          <h2 class="board-column-title">To Do</h2>
+          <p class="board-column-subtitle">All planned tasks.</p>
+        </div>
+        <span class="badge rounded-pill count-pill">
+          <%= columns.todo.length %>
+        </span>
+      </header>
+
+      <div class="board-column-body">
+        <% if (!columns.todo.length) { %>
+          <p class="empty-text">No tasks yet. Create one!</p>
+        <% } %>
+        <% columns.todo.forEach(task => { %>
+          <article class="task-card">
+            <div class="task-card-main">
+              <h3 class="task-title"><%= task.title %></h3>
+              <% if (task.description) { %>
+                <p class="task-desc"><%= task.description %></p>
+              <% } %>
+
+              <div class="task-meta">
+                <% if (task.tag) { %>
+                  <span class="task-tag"><%= task.tag %></span>
+                <% } %>
+                <% if (task.due_date) { %>
+                  <span class="task-due">
+                    Due: <%= task.due_date %>
+                  </span>
+                <% } %>
+                <% if (task.assignee_name) { %>
+                  <span class="task-assignee">
+                    · <%= task.assignee_name %>
+                  </span>
+                <% } %>
+              </div>
+            </div>
+
+            <form method="POST" action="/tasks/<%= task.id %>/update" class="task-actions">
+              <select name="status" class="form-select form-select-sm status-select">
+                <option value="todo" selected>To Do</option>
+                <option value="in_progress">In Progress</option>
+                <option value="paused">Paused</option>
+                <option value="done">Done</option>
+              </select>
+
+              <select
+                name="priority"
+                class="form-select form-select-sm priority-select"
+              >
+                <option value="low" <%= task.priority === 'low' ? 'selected' : '' %>>Low</option>
+                <option value="medium" <%= task.priority === 'medium' ? 'selected' : '' %>>Medium</option>
+                <option value="high" <%= task.priority === 'high' ? 'selected' : '' %>>High</option>
+                <option value="urgent" <%= task.priority === 'urgent' ? 'selected' : '' %>>Urgent</option>
+              </select>
+
+              <% if (workspace && workspace.role === 'owner') { %>
+                <select
+                  name="assigned_to"
+                  class="form-select form-select-sm assign-select"
+                >
+                  <option value="">Unassigned</option>
+                  <% members.forEach(m => { %>
+                    <option
+                      value="<%= m.id %>"
+                      <%= task.assigned_to === m.id ? 'selected' : '' %>
+                    >
+                      <%= m.name %> <%= m.role === 'owner' ? '(Owner)' : '' %>
+                    </option>
+                  <% }) %>
+                </select>
+              <% } %>
+
+              <button class="btn btn-outline-info btn-sm">Update</button>
+            </form>
+
+            <form method="POST" action="/tasks/<%= task.id %>/delete" class="task-delete-form">
+              <button class="btn btn-link btn-sm text-danger">Delete</button>
+            </form>
+          </article>
+        <% }) %>
+      </div>
+    </section>
+
+    <!-- In Progress -->
+    <section class="board-column">
+      <header class="board-column-header">
+        <div>
+          <h2 class="board-column-title">In Progress</h2>
+          <p class="board-column-subtitle">Currently being worked on.</p>
+        </div>
+        <span class="badge rounded-pill count-pill">
+          <%= columns.in_progress.length %>
+        </span>
+      </header>
+
+      <div class="board-column-body">
+        <% if (!columns.in_progress.length) { %>
+          <p class="empty-text">No tasks in progress.</p>
+        <% } %>
+        <% columns.in_progress.forEach(task => { %>
+          <article class="task-card">
+            <div class="task-card-main">
+              <h3 class="task-title"><%= task.title %></h3>
+              <% if (task.description) { %>
+                <p class="task-desc"><%= task.description %></p>
+              <% } %>
+
+              <div class="task-meta">
+                <% if (task.tag) { %>
+                  <span class="task-tag"><%= task.tag %></span>
+                <% } %>
+                <% if (task.due_date) { %>
+                  <span class="task-due">
+                    Due: <%= task.due_date %>
+                  </span>
+                <% } %>
+                <% if (task.assignee_name) { %>
+                  <span class="task-assignee">
+                    · <%= task.assignee_name %>
+                  </span>
+                <% } %>
+              </div>
+            </div>
+
+            <form method="POST" action="/tasks/<%= task.id %>/update" class="task-actions">
+              <select name="status" class="form-select form-select-sm status-select">
+                <option value="todo">To Do</option>
+                <option value="in_progress" selected>In Progress</option>
+                <option value="paused">Paused</option>
+                <option value="done">Done</option>
+              </select>
+
+              <select
+                name="priority"
+                class="form-select form-select-sm priority-select"
+              >
+                <option value="low" <%= task.priority === 'low' ? 'selected' : '' %>>Low</option>
+                <option value="medium" <%= task.priority === 'medium' ? 'selected' : '' %>>Medium</option>
+                <option value="high" <%= task.priority === 'high' ? 'selected' : '' %>>High</option>
+                <option value="urgent" <%= task.priority === 'urgent' ? 'selected' : '' %>>Urgent</option>
+              </select>
+
+              <% if (workspace && workspace.role === 'owner') { %>
+                <select
+                  name="assigned_to"
+                  class="form-select form-select-sm assign-select"
+                >
+                  <option value="">Unassigned</option>
+                  <% members.forEach(m => { %>
+                    <option
+                      value="<%= m.id %>"
+                      <%= task.assigned_to === m.id ? 'selected' : '' %>
+                    >
+                      <%= m.name %> <%= m.role === 'owner' ? '(Owner)' : '' %>
+                    </option>
+                  <% }) %>
+                </select>
+              <% } %>
+
+              <button class="btn btn-outline-info btn-sm">Update</button>
+            </form>
+
+            <form method="POST" action="/tasks/<%= task.id %>/delete" class="task-delete-form">
+              <button class="btn btn-link btn-sm text-danger">Delete</button>
+            </form>
+          </article>
+        <% }) %>
+      </div>
+    </section>
+
+    <!-- Paused -->
+    <section class="board-column">
+      <header class="board-column-header">
+        <div>
+          <h2 class="board-column-title">Paused</h2>
+          <p class="board-column-subtitle">On hold for now.</p>
+        </div>
+        <span class="badge rounded-pill count-pill">
+          <%= columns.paused.length %>
+        </span>
+      </header>
+
+      <div class="board-column-body">
+        <% if (!columns.paused.length) { %>
+          <p class="empty-text">Nothing paused.</p>
+        <% } %>
+        <% columns.paused.forEach(task => { %>
+          <article class="task-card">
+            <div class="task-card-main">
+              <h3 class="task-title"><%= task.title %></h3>
+              <% if (task.description) { %>
+                <p class="task-desc"><%= task.description %></p>
+              <% } %>
+
+              <div class="task-meta">
+                <% if (task.tag) { %>
+                  <span class="task-tag"><%= task.tag %></span>
+                <% } %>
+                <% if (task.due_date) { %>
+                  <span class="task-due">
+                    Due: <%= task.due_date %>
+                  </span>
+                <% } %>
+                <% if (task.assignee_name) { %>
+                  <span class="task-assignee">
+                    · <%= task.assignee_name %>
+                  </span>
+                <% } %>
+              </div>
+            </div>
+
+            <form method="POST" action="/tasks/<%= task.id %>/update" class="task-actions">
+              <select name="status" class="form-select form-select-sm status-select">
+                <option value="todo">To Do</option>
+                <option value="in_progress">In Progress</option>
+                <option value="paused" selected>Paused</option>
+                <option value="done">Done</option>
+              </select>
+
+              <select
+                name="priority"
+                class="form-select form-select-sm priority-select"
+              >
+                <option value="low" <%= task.priority === 'low' ? 'selected' : '' %>>Low</option>
+                <option value="medium" <%= task.priority === 'medium' ? 'selected' : '' %>>Medium</option>
+                <option value="high" <%= task.priority === 'high' ? 'selected' : '' %>>High</option>
+                <option value="urgent" <%= task.priority === 'urgent' ? 'selected' : '' %>>Urgent</option>
+              </select>
+
+              <% if (workspace && workspace.role === 'owner') { %>
+                <select
+                  name="assigned_to"
+                  class="form-select form-select-sm assign-select"
+                >
+                  <option value="">Unassigned</option>
+                  <% members.forEach(m => { %>
+                    <option
+                      value="<%= m.id %>"
+                      <%= task.assigned_to === m.id ? 'selected' : '' %>
+                    >
+                      <%= m.name %> <%= m.role === 'owner' ? '(Owner)' : '' %>
+                    </option>
+                  <% }) %>
+                </select>
+              <% } %>
+
+              <button class="btn btn-outline-info btn-sm">Update</button>
+            </form>
+
+            <form method="POST" action="/tasks/<%= task.id %>/delete" class="task-delete-form">
+              <button class="btn btn-link btn-sm text-danger">Delete</button>
+            </form>
+          </article>
+        <% }) %>
+      </div>
+    </section>
+
+    <!-- Done -->
+    <section class="board-column">
+      <header class="board-column-header">
+        <div>
+          <h2 class="board-column-title">Done</h2>
+          <p class="board-column-subtitle">Completed tasks.</p>
+        </div>
+        <span class="badge rounded-pill count-pill">
+          <%= columns.done.length %>
+        </span>
+      </header>
+
+      <div class="board-column-body">
+        <% if (!columns.done.length) { %>
+          <p class="empty-text">No completed tasks yet.</p>
+        <% } %>
+        <% columns.done.forEach(task => { %>
+          <article class="task-card task-card-done">
+            <div class="task-card-main">
+              <h3 class="task-title"><%= task.title %></h3>
+              <% if (task.description) { %>
+                <p class="task-desc"><%= task.description %></p>
+              <% } %>
+
+              <div class="task-meta">
+                <% if (task.tag) { %>
+                  <span class="task-tag"><%= task.tag %></span>
+                <% } %>
+                <% if (task.due_date) { %>
+                  <span class="task-due">
+                    Due: <%= task.due_date %>
+                  </span>
+                <% } %>
+                <% if (task.assignee_name) { %>
+                  <span class="task-assignee">
+                    · <%= task.assignee_name %>
+                  </span>
+                <% } %>
+              </div>
+            </div>
+
+            <form method="POST" action="/tasks/<%= task.id %>/update" class="task-actions">
+              <select name="status" class="form-select form-select-sm status-select">
+                <option value="todo">To Do</option>
+                <option value="in_progress">In Progress</option>
+                <option value="paused">Paused</option>
+                <option value="done" selected>Done</option>
+              </select>
+
+              <select
+                name="priority"
+                class="form-select form-select-sm priority-select"
+              >
+                <option value="low" <%= task.priority === 'low' ? 'selected' : '' %>>Low</option>
+                <option value="medium" <%= task.priority === 'medium' ? 'selected' : '' %>>Medium</option>
+                <option value="high" <%= task.priority === 'high' ? 'selected' : '' %>>High</option>
+                <option value="urgent" <%= task.priority === 'urgent' ? 'selected' : '' %>>Urgent</option>
+              </select>
+
+              <% if (workspace && workspace.role === 'owner') { %>
+                <select
+                  name="assigned_to"
+                  class="form-select form-select-sm assign-select"
+                >
+                  <option value="">Unassigned</option>
+                  <% members.forEach(m => { %>
+                    <option
+                      value="<%= m.id %>"
+                      <%= task.assigned_to === m.id ? 'selected' : '' %>
+                    >
+                      <%= m.name %> <%= m.role === 'owner' ? '(Owner)' : '' %>
+                    </option>
+                  <% }) %>
+                </select>
+              <% } %>
+
+              <button class="btn btn-outline-info btn-sm">Update</button>
+            </form>
+
+            <form method="POST" action="/tasks/<%= task.id %>/delete" class="task-delete-form">
+              <button class="btn btn-link btn-sm text-danger">Delete</button>
+            </form>
+          </article>
+        <% }) %>
+      </div>
+    </section>
+  </div>
+</div>

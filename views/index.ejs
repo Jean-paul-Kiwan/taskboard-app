@@ -1,0 +1,10 @@
+<div class="text-center mt-5">
+  <h1>TaskBoard</h1>
+  <p class="lead text-muted">Simple kanban-style board for your tasks.</p>
+  <% if (!currentUser) { %>
+    <a href="/signup" class="btn btn-primary me-2">Get Started</a>
+    <a href="/login" class="btn btn-outline-secondary">Login</a>
+  <% } else { %>
+    <a href="/tasks" class="btn btn-primary">Go to Board</a>
+  <% } %>
+</div>

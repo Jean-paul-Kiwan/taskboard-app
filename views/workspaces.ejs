@@ -1,0 +1,93 @@
+<div class="tasks-page-header">
+  <h1 class="tasks-title">Your Workspaces</h1>
+  <p class="tasks-subtitle">
+    Create workspaces for each project and switch between them easily.
+  </p>
+</div>
+
+<div class="row mt-4">
+  <div class="col-md-7 mb-4">
+    <h2 class="section-title mb-3">Joined Workspaces</h2>
+
+    <% if (!memberships.length) { %>
+      <p class="empty-text">
+        You are not part of any workspace yet. Create one on the right or ask
+        someone to invite you.
+      </p>
+    <% } %>
+
+    <% memberships.forEach(ws => { %>
+      <div class="workspace-card mb-3">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <h3 class="workspace-name"><%= ws.name %></h3>
+            <span class="workspace-role-badge">
+              <%= ws.role === 'owner' ? 'Owner' : 'Member' %>
+            </span>
+          </div>
+
+          <div class="d-flex align-items-center gap-2">
+            <% if (currentWorkspaceId === ws.id) { %>
+              <span class="badge bg-success me-2">Current</span>
+            <% } %>
+            <form method="POST" action="/workspaces/<%= ws.id %>/switch">
+              <button class="btn btn-sm btn-outline-info" type="submit">
+                Switch
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+
+  <div class="col-md-5 mb-4">
+    <div class="form-card">
+      <h2 class="section-title">Create New Workspace</h2>
+      <p class="text-muted small mb-3">
+        Use this for a new project, team, or client.
+      </p>
+
+      <form method="POST" action="/workspaces">
+        <div class="mb-3">
+          <label class="form-label">Workspace Name</label>
+          <input
+            type="text"
+            name="name"
+            class="form-control"
+            placeholder="Example: AI Research Sprint"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary rounded-pill w-100">
+          Create Workspace
+        </button>
+      </form>
+    </div>
+
+    <% if (currentWorkspaceId) { %>
+      <div class="form-card mt-4">
+        <h2 class="section-title">Invite Member</h2>
+        <p class="text-muted small mb-3">
+          Invite an existing TaskBoard user to the current workspace.
+        </p>
+
+        <form method="POST" action="/workspaces/<%= currentWorkspaceId %>/invite">
+          <div class="mb-3">
+            <label class="form-label">User Email</label>
+            <input
+              type="email"
+              name="email"
+              class="form-control"
+              placeholder="demo2@example.invalid"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn-outline-info w-100">
+            Send Invitation
+          </button>
+        </form>
+      </div>
+    <% } %>
+  </div>
+</div>

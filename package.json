@@ -1,0 +1,30 @@
+{
+  "name": "taskboard-app",
+  "version": "1.0.0",
+  "description": "TaskBoard full-stack app with auth and kanban board",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18",
+    "npm": ">=9"
+  },
+  "dependencies": {
+    "@aws-sdk/client-lambda": "^3.957.0",
+    "axios": "^1.13.2",
+    "bcryptjs": "^3.0.3",
+    "better-sqlite3": "^11.0.0",
+    "body-parser": "^1.20.3",
+    "connect-mongodb-session": "^5.0.0",
+    "dotenv": "^17.2.3",
+    "ejs": "^3.1.10",
+    "express": "^4.22.1",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.17.3",
+    "mongodb": "^7.0.0",
+    "mongoose": "^9.0.2",
+    "morgan": "^1.10.0",
+    "mysql2": "^3.16.0"
+  }
+}

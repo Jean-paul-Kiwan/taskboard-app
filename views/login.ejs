@@ -1,0 +1,47 @@
+<div class="auth-container">
+  <div class="login-container">
+    <div class="login-left">
+
+      <h1 class="login-heading">Welcome -- back</h1>
+      <p class="login-small">Log in to your TaskBoard account.</p>
+
+      <form method="POST" action="/login" class="login-form">
+        <div class="input-group">
+          <label class="form-label">Email</label>
+          <input
+            type="email"
+            name="email"
+            required
+            placeholder="demo1@example.invalid"
+          />
+        </div>
+
+        <div class="input-group">
+          <label class="form-label">Password</label>
+          <input
+            type="password"
+            name="password"
+            required
+            placeholder="••••••••"
+          />
+        </div>
+
+        <button type="submit" class="btn-login-main">Login</button>
+      </form>
+
+      <p class="mt-3 text-accent">
+        New here?
+        <a href="/signup">Create an account</a>
+      </p>
+    </div>
+
+    <div class="login-right">
+      <h2 class="right-title">TaskBoard</h2>
+      <p class="right-text">
+        Visualize your tasks across a clean 4-column workflow.  
+        Track what’s next, what’s in progress and what’s done.
+      </p>
+      <a href="/signup" class="btn-signup-main">Get Started</a>
+    </div>
+  </div>
+</div>
